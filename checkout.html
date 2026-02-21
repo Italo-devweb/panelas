@@ -884,11 +884,11 @@ n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];
 s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '3368471229974487');
+fbq('init', '1433399025104876');
 fbq('track', 'PageView');
 </script>
 <noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=3368471229974487&ev=PageView&noscript=1"
+src="https://www.facebook.com/tr?id=1433399025104876&ev=PageView&noscript=1"
 /></noscript>
 <!-- End Meta Pixel Code -->
 <!-- UTMify -->
@@ -920,7 +920,7 @@ src="https://www.facebook.com/tr?id=3368471229974487&ev=PageView&noscript=1"
 <body>
   <!-- Brand Banner -->
   <div class="brand-banner">
-    <img src="banner.png" alt="Drogasil x Principia" />
+    <img src="https://files.manuscdn.com/user_upload_by_module/session_file/310419663029920067/lWaBDQxTpjAQLGWT.png" alt="Drogasil x Principia" />
   </div>
 
   <main>
@@ -936,7 +936,7 @@ src="https://www.facebook.com/tr?id=3368471229974487&ev=PageView&noscript=1"
 
           <div class="product-info">
             <h3>Jogo de Panelas Cerâmico 6 Peças</h3>
-            <p>Brinox - Jogo de Panelas 6 Peças Ceramic Life Sirius - Vanilla</p>
+            <p>Gel de Limpeza GL-03 + Hidratante + Vitamina C + Protetor Solar</p>
           </div>
 
           <div class="price-section">
@@ -1217,7 +1217,7 @@ src="https://www.facebook.com/tr?id=3368471229974487&ev=PageView&noscript=1"
             <p class="footer-label">Formas de pagamento</p>
             <div class="payment-logos-footer">
               <div class="pay-logo-box">
-                <img src="pix.png" style="height:24px;width:24px;object-fit:contain;border-radius:4px;" alt="PIX" />
+                <img src="pix.jpg" style="height:24px;width:24px;object-fit:contain;border-radius:4px;" alt="PIX" />
                 <span style="font-family:Arial;font-size:11px;font-weight:700;color:#32BCAD;margin-left:4px;">PIX</span>
               </div>
             </div>
@@ -1634,6 +1634,16 @@ src="https://www.facebook.com/tr?id=3368471229974487&ev=PageView&noscript=1"
         const state = document.getElementById('state').value;
         const cep = document.getElementById('cep').value.replace(/\D/g, '');
 
+        // Salva dados para correspondência avançada do Pixel (enquanto temos as variáveis no escopo)
+        var nameParts = fullName.trim().toLowerCase().split(' ');
+        sessionStorage.setItem('pxl_fn', nameParts[0] || '');
+        sessionStorage.setItem('pxl_ln', nameParts.slice(1).join(' ') || '');
+        sessionStorage.setItem('pxl_ph', '55' + phone);
+        sessionStorage.setItem('pxl_zp', cep);
+        sessionStorage.setItem('pxl_ct', city.toLowerCase().replace(/\s/g, ''));
+        sessionStorage.setItem('pxl_st', state.toLowerCase());
+        sessionStorage.setItem('pxl_country', 'br');
+
         const endereco = `${street}, ${number}${complement ? ' - ' + complement : ''} - ${neighborhood}, ${city} - ${state}, ${cep}`;
 
         const payload = {
@@ -1765,16 +1775,6 @@ src="https://www.facebook.com/tr?id=3368471229974487&ev=PageView&noscript=1"
 
           if (status === 'PAID' || status === 'OK' || status === 'APPROVED' || status === 'paid') {
             clearInterval(pollingInterval);
-            // Salva dados do cliente para correspondência avançada do Pixel
-            var nameParts = fullName.trim().toLowerCase().split(' ');
-            sessionStorage.setItem('pxl_fn', nameParts[0] || '');
-            sessionStorage.setItem('pxl_ln', nameParts.slice(1).join(' ') || '');
-            sessionStorage.setItem('pxl_ph', '55' + phone);
-            sessionStorage.setItem('pxl_zp', cep);
-            sessionStorage.setItem('pxl_ct', city.toLowerCase().replace(/\s/g, ''));
-            sessionStorage.setItem('pxl_st', state.toLowerCase());
-            sessionStorage.setItem('pxl_country', 'br');
-
             window.location.href = `obrigado-panelas.html?order_id=${transactionId}`;
           }
         } catch (err) {
