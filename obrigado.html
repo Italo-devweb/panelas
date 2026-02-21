@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedido Confirmado — Principia Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  // Lê dados de correspondência avançada salvos pelo checkout
+  (function() {
+    var ss = window.sessionStorage;
+    var userData = {};
+    var fields = ['fn','ln','ph','zp','ct','st','country'];
+    fields.forEach(function(f) {
+      var v = ss.getItem('pxl_' + f);
+      if (v) userData[f] = v;
+    });
+    fbq('init', '3368471229974487', userData);
+    console.log('Pixel init com correspondência avançada:', Object.keys(userData));
+  })();
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=3368471229974487&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <!-- UTMify -->
+  <script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck
+    data-utmify-prevent-subids
+    async
+    defer
+  ></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --green-light: #dcfce7;
+      --red: #dc2626;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+      --bg: #f9fafb;
+      --white: #ffffff;
+    }
+
+    html, body { width: 100%; min-height: 100%; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .header { width: 100%; overflow: hidden; border-bottom: 1px solid var(--border); }
+    .header img {
+      width: 100%; height: 140px;
+      display: block; object-fit: cover; object-position: center;
+    }
+    @media (max-width: 480px) { .header img { height: 100px; } }
+
+    .page { max-width: 600px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+    /* Confirmation */
+    .confirm-block {
+      text-align: center; padding: 2.5rem 1.5rem 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .check-wrap {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--green-light);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.5rem; position: relative;
+    }
+    .check-wrap::after {
+      content: ''; position: absolute; inset: -6px;
+      border-radius: 50%; border: 3px solid var(--green-light);
+      animation: ping 2s ease infinite;
+    }
+    @keyframes ping {
+      0%   { transform: scale(1); opacity: 0.8; }
+      70%  { transform: scale(1.3); opacity: 0; }
+      100% { transform: scale(1.3); opacity: 0; }
+    }
+    .check-wrap i { font-size: 2rem; color: var(--green); }
+
+    .confirm-title {
+      font-family: 'Sora', sans-serif; font-size: 1.6rem;
+      font-weight: 800; line-height: 1.25; color: var(--text); margin-bottom: 0.6rem;
+    }
+    .confirm-sub { font-size: 0.95rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+
+    .order-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 0.85rem; padding: 1rem 1.25rem;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; text-align: left; margin-top: 0.5rem;
+    }
+    .order-info { display: flex; flex-direction: column; gap: 0.2rem; }
+    .order-num { font-size: 0.75rem; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.04em; }
+    .order-id { font-family: 'Sora', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); }
+    .order-product { font-size: 0.8rem; color: var(--muted); }
+    .order-price { font-family: 'Sora', sans-serif; font-size: 1.15rem; font-weight: 700; color: var(--green); white-space: nowrap; }
+
+    .divider { height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); margin: 2rem 0; }
+
+    /* Upsell */
+    .upsell { animation: fadeUp 0.7s 0.2s ease both; }
+    .upsell-eyebrow { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--red); margin-bottom: 0.5rem; }
+    .upsell-title { font-family: 'Sora', sans-serif; font-size: 1.25rem; font-weight: 800; line-height: 1.3; color: var(--text); margin-bottom: 1.5rem; }
+
+    .upsell-card {
+      border: 2px solid var(--border); border-radius: 1rem; overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .upsell-card:hover { border-color: var(--green); box-shadow: 0 4px 24px rgba(34,197,94,0.12); }
+
+    .upsell-img {
+      width: 100%; height: 220px; background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .upsell-img img { width: 100%; height: 100%; object-fit: cover; }
+
+    .badge-discount {
+      position: absolute; top: 1rem; left: 1rem;
+      background: var(--red); color: #fff;
+      font-family: 'Sora', sans-serif; font-size: 0.85rem; font-weight: 700;
+      padding: 0.3rem 0.7rem; border-radius: 2rem;
+    }
+
+    .upsell-body { padding: 1.25rem 1.25rem 1.5rem; }
+    .upsell-product-name { font-family: 'Sora', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .upsell-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 1.1rem; }
+
+    .price-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+    .price-original { font-size: 0.9rem; color: var(--muted); text-decoration: line-through; }
+    .price-promo { font-family: 'Sora', sans-serif; font-size: 1.5rem; font-weight: 800; color: var(--green); }
+    .price-installments { font-size: 0.78rem; color: var(--muted); margin-bottom: 1.1rem; }
+
+    .btn-upsell {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 1rem;
+      background: var(--green); color: #fff;
+      font-family: 'Sora', sans-serif; font-size: 0.95rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em;
+      border: none; border-radius: 0.6rem; cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-upsell:hover { background: var(--green-dark); box-shadow: 0 4px 16px rgba(34,197,94,0.35); transform: translateY(-1px); }
+    .btn-upsell:active { transform: translateY(0); }
+
+    .btn-no {
+      display: block; width: 100%; text-align: center; margin-top: 0.85rem;
+      font-size: 0.82rem; color: var(--muted); cursor: pointer;
+      background: none; border: none; padding: 0.25rem;
+      transition: color 0.15s;
+    }
+    .btn-no:hover { color: var(--text); text-decoration: underline; }
+
+    /* Footer */
+    .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid var(--border); text-align: center; }
+    .footer-title { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.75rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
+    .footer-link { display: flex; align-items: center; gap: 0.4rem; text-decoration: none; font-size: 0.88rem; color: var(--text); font-weight: 500; transition: color 0.15s; }
+    .footer-link:hover { color: var(--green); }
+    .footer-link.wa i { color: #25d366; }
+    .footer-link.mail i { color: var(--green); }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <img src="banner2.png" alt="Brinox" />
+  </header>
+
+  <main class="page">
+
+    <div class="confirm-block">
+      <div class="check-wrap"><i class="fas fa-check"></i></div>
+      <h1 class="confirm-title">Pedido confirmado!<br>Obrigado pela compra.</h1>
+      <p class="confirm-sub">Enviamos os detalhes do seu pedido para o e-mail cadastrado.</p>
+      <div class="order-card">
+        <div class="order-info">
+          <span class="order-num">Número do pedido</span>
+          <span class="order-id" id="orderIdDisplay">#000000000000</span>
+          <span class="order-product">Jogo de Panelas Cerâmico 6 Peças</span>
+        </div>
+        <span class="order-price" id="orderValueDisplay">R$ 97,99</span>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="upsell">
+      <p class="upsell-eyebrow">&#9889; Oferta exclusiva para quem comprou as panelas</p>
+      <h2 class="upsell-title">Espere! Aproveite este combo exclusivo para dominar sua nova cozinha...</h2>
+
+      <div class="upsell-card">
+        <div class="upsell-img">
+          <img src="upsell.jpeg" alt="Combo Receitas + Luvas MasterChef" onerror="this.src='upsell.jpeg'" />
+          <span class="badge-discount">-60%</span>
+        </div>
+        <div class="upsell-body">
+          <p class="upsell-product-name">Combo MasterChef: E-book Receitas Práticas + Luvas de Silicone</p>
+          <p class="upsell-desc">E-book digital com 50 receitas práticas para usar no seu novo jogo de panelas — sopas, risotos, frituras e sobremesas. Acompanha 1 par de Luvas de Silicone MasterChef para manusear as tampas quentes com segurança e estilo.</p>
+          <div class="price-row">
+            <span class="price-original">R$ 89,90</span>
+            <span class="price-promo">R$ 34,90</span>
+          </div>
+          <p class="price-installments">Entrega digital imediata + envio das luvas</p>
+          <a class="btn-upsell" id="upsellBtn" href="#" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i>
+            QUERO O COMBO POR R$ 34,90
+          </a>
+          <button class="btn-no" id="noThanksBtn">Não, obrigado. Finalizar compra.</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p class="footer-title">Precisa de ajuda?</p>
+      <div class="footer-links">
+        <a class="footer-link wa" href="https://wa.me/5562982202739" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-whatsapp"></i>
+          (62) 98220-2739
+        </a>
+        <a class="footer-link mail" href="mailto:atendimento@principiaskin.com">
+          <i class="fas fa-envelope"></i>
+          atendimento@principiaskin.com
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // ── Captura parâmetros da URL
+    function gerarOrderId() {
+      var now = new Date();
+      var pad = function(n) { return String(n).padStart(2, '0'); };
+      return now.getFullYear() + pad(now.getMonth()+1) + pad(now.getDate()) + pad(now.getHours()) + pad(now.getMinutes());
+    }
+
+    var params  = new URLSearchParams(window.location.search);
+    var orderId = params.get('order_id') || gerarOrderId();
+    var value   = params.get('value') || '149,90';
+
+    // ── Exibe na página
+    document.getElementById('orderIdDisplay').textContent    = '#' + orderId;
+    document.getElementById('orderValueDisplay').textContent = 'R$ ' + value;
+
+    // ── Botão upsell WhatsApp
+    var waMsg = encodeURIComponent(
+      'Olá! Meu pedido #' + orderId + ' foi confirmado. Gostaria de adicionar o Combo MasterChef (E-book + Luvas) por R$ 34,90.'
+    );
+    document.getElementById('upsellBtn').href = 'https://wa.me/5562982202739?text=' + waMsg;
+
+    // ── Botão "Não, obrigado"
+    document.getElementById('noThanksBtn').addEventListener('click', function() {
+      window.location.href = 'index.html';
+    });
+
+    // ── Disparo do Purchase
+    // O pixel já está inicializado no <head>, fbq() existe mesmo antes do fbevents.js carregar
+    // pois o código de init cria uma fila. Podemos chamar direto.
+    fbq('track', 'Purchase', {
+      value: 149.90,
+      currency: 'BRL',
+      content_name: 'Jogo de Panelas Cerâmico 6 Peças',
+      content_type: 'product',
+      content_ids: ['jogo-panelas-ceramico-6-pecas'],
+      order_id: orderId
+    });
+    console.log('Purchase fired — order_id:', orderId);
+  </script>
+
+</body>
+</html>

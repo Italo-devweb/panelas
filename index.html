@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jogo de Panelas Cerâmico 6 Peças — Principia Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '3368471229974487');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=3368471229974487&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+
+  <!-- UTMify -->
+  <script src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck data-utmify-prevent-subids async defer></script>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green: #22c55e;
+      --green-dark: #16a34a;
+      --green-pale: #f0fdf4;
+      --green-light: #dcfce7;
+      --red: #dc2626;
+      --red-dark: #b91c1c;
+      --sand: #f5f0ea;
+      --sand-dark: #ede5d8;
+      --warm: #a07850;
+      --text: #1a1208;
+      --text-mid: #4a3f30;
+      --muted: #8a7a68;
+      --border: #e8e0d5;
+      --white: #ffffff;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      padding-top: 48px; /* urgency bar height */
+    }
+
+    /* ── REVEAL ─────────────────────────────────── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; }
+    .d3 { transition-delay: 0.3s; } .d4 { transition-delay: 0.4s; }
+
+    /* ── URGENCY BAR ─────────────────────────────── */
+    .urgency-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: var(--red-dark); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.6rem; padding: 0.65rem 1rem;
+      font-size: 0.82rem; font-weight: 600; letter-spacing: 0.02em;
+      text-align: center;
+    }
+    .urgency-bar .countdown {
+      background: rgba(255,255,255,0.2);
+      padding: 0.15rem 0.55rem; border-radius: 0.3rem;
+      font-family: 'Outfit', monospace; font-weight: 700; font-size: 0.9rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── LAYOUT ──────────────────────────────────── */
+    .section { padding: 4rem 1.25rem; }
+    .inner { max-width: 780px; margin: 0 auto; }
+    .inner.wide { max-width: 1020px; }
+
+    .section-label {
+      font-size: 0.72rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      color: var(--warm); margin-bottom: 0.6rem;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700; line-height: 1.15; color: var(--text);
+    }
+    .section-title em { font-style: italic; color: var(--warm); }
+    .section-sub { font-size: 0.95rem; color: var(--muted); line-height: 1.7; margin-top: 0.75rem; }
+
+    /* ── HERO ────────────────────────────────────── */
+    #hero { background: var(--sand); padding: 0; }
+
+    .hero-inner {
+      max-width: 1040px; margin: 0 auto;
+      padding: 3rem 1.5rem 0;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 3rem; align-items: end;
+    }
+    @media (max-width: 700px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 0; padding: 1.5rem 1.25rem 0; }
+      .hero-img-wrap { order: -1; }
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--red); color: #fff;
+      font-size: 0.75rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.1em;
+      padding: 0.35rem 0.9rem; border-radius: 2rem; margin-bottom: 1.1rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700; line-height: 1.12; color: var(--text); margin-bottom: 0.9rem;
+    }
+    .hero-title em { font-style: italic; color: var(--warm); }
+
+    .hero-sub { font-size: 0.95rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 1.5rem; }
+
+    .stars-row { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem; }
+    .stars { color: #d97706; font-size: 0.9rem; }
+    .stars-text { font-size: 0.82rem; color: var(--muted); }
+    .stars-text strong { color: var(--text); }
+
+    .price-block {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 1rem; padding: 1.25rem; margin-bottom: 1.25rem;
+    }
+    .price-from { font-size: 0.88rem; color: var(--muted); text-decoration: line-through; margin-bottom: 0.15rem; }
+    .price-main { display: flex; align-items: baseline; gap: 0.75rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+    .price-value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; font-weight: 700; color: var(--green-dark); line-height: 1;
+    }
+    .price-badge {
+      background: var(--red); color: #fff;
+      font-size: 0.78rem; font-weight: 700;
+      padding: 0.25rem 0.65rem; border-radius: 0.4rem;
+    }
+    .price-pix { font-size: 0.82rem; color: var(--muted); margin-bottom: 0.25rem; }
+    .price-pix strong { color: var(--green-dark); }
+    .price-installment { font-size: 0.82rem; color: var(--muted); }
+    .price-savings {
+      font-size: 0.78rem; color: var(--green-dark); font-weight: 600;
+      margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border);
+    }
+
+    .btn-cta {
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      width: 100%; padding: 1.05rem 1.5rem;
+      background: var(--green); color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.05em;
+      border: none; border-radius: 0.65rem; cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+      position: relative; overflow: hidden;
+    }
+    .btn-cta::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
+      pointer-events: none;
+    }
+    .btn-cta:hover { background: var(--green-dark); box-shadow: 0 6px 24px rgba(34,197,94,0.35); transform: translateY(-1px); }
+    .btn-cta:active { transform: translateY(0); }
+
+    .trust-mini { display: flex; flex-wrap: wrap; gap: 0.75rem 1.25rem; margin-top: 0.85rem; }
+    .trust-mini-item { display: flex; align-items: center; gap: 0.35rem; font-size: 0.78rem; color: var(--muted); }
+    .trust-mini-item i { color: var(--green); font-size: 0.8rem; }
+
+    .hero-img-wrap { align-self: end; }
+    .hero-img-wrap img {
+      width: 100%; max-width: 480px;
+      display: block; border-radius: 1rem 1rem 0 0;
+      object-fit: cover; height: 480px;
+      filter: drop-shadow(0 -8px 30px rgba(0,0,0,0.08));
+    }
+    @media (max-width: 700px) {
+      .hero-img-wrap img { height: 280px; border-radius: 1rem; margin-top: 1.5rem; max-width: 100%; }
+    }
+
+    /* ── PROOF STRIP ─────────────────────────────── */
+    .proof-strip { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 1.5rem 1.25rem; background: var(--white); }
+    .proof-strip-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; justify-content: center; gap: 2.5rem; flex-wrap: wrap; }
+    .proof-stat { text-align: center; }
+    .proof-stat-value { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 700; color: var(--warm); line-height: 1; }
+    .proof-stat-label { font-size: 0.75rem; color: var(--muted); margin-top: 0.2rem; }
+    .proof-divider { width: 1px; height: 36px; background: var(--border); }
+    @media (max-width: 480px) { .proof-divider { display: none; } }
+
+    /* ── TESTIMONIALS ────────────────────────────── */
+    .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+    @media (max-width: 580px) { .testimonials-grid { grid-template-columns: 1fr; } }
+    .testimonial-card { background: var(--sand); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; }
+    .testimonial-stars { color: #d97706; font-size: 0.85rem; margin-bottom: 0.6rem; }
+    .testimonial-text { font-size: 0.88rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 0.85rem; font-style: italic; }
+    .testimonial-author { font-size: 0.8rem; font-weight: 700; color: var(--text); }
+    .testimonial-author span { display: block; font-weight: 400; color: var(--muted); margin-top: 0.1rem; }
+
+    /* ── KIT SECTION ─────────────────────────────── */
+    #kit { background: var(--sand); }
+    .kit-img { width: 100%; border-radius: 1rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
+
+    .pieces-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.85rem; margin-top: 1.75rem; }
+    @media (min-width: 600px) { .pieces-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .piece-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 0.85rem; padding: 1rem;
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .piece-card:hover { border-color: var(--warm); box-shadow: 0 3px 16px rgba(160,120,80,0.12); }
+    .piece-icon {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: var(--sand); display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; color: var(--warm); font-size: 1rem;
+    }
+    .piece-name { font-size: 0.85rem; font-weight: 700; color: var(--text); margin-bottom: 0.15rem; line-height: 1.3; }
+    .piece-detail { font-size: 0.75rem; color: var(--muted); line-height: 1.4; }
+    .piece-capacity { font-size: 0.7rem; font-weight: 600; color: var(--warm); margin-top: 0.25rem; }
+
+    .kit-footer {
+      margin-top: 1.25rem; padding: 1rem 1.25rem;
+      background: var(--green-light); border-radius: 0.85rem;
+      display: flex; align-items: center; gap: 0.75rem;
+      font-size: 0.88rem; font-weight: 600; color: var(--green-dark);
+    }
+    .kit-footer i { font-size: 1.1rem; color: var(--green); }
+
+    /* ── FEATURES ────────────────────────────────── */
+    .features-img { width: 100%; border-radius: 1rem; margin-bottom: 2rem; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+    .benefits-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.75rem; }
+    @media (min-width: 600px) { .benefits-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .benefit-card {
+      background: var(--white); border: 1.5px solid var(--border);
+      border-radius: 1rem; padding: 1.25rem 1rem; text-align: center;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .benefit-card:hover { border-color: var(--warm); transform: translateY(-3px); }
+    .benefit-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--sand); display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 0.75rem; font-size: 1.2rem; color: var(--warm);
+    }
+    .benefit-name { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 0.3rem; }
+    .benefit-desc { font-size: 0.75rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── COMPATIBILITY ───────────────────────────── */
+    .compat-img { width: 100%; border-radius: 1rem; box-shadow: 0 8px 32px rgba(0,0,0,0.07); }
+    .compat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; margin-top: 2rem; }
+    @media (max-width: 600px) { .compat-grid { grid-template-columns: 1fr; } }
+
+    .compat-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .compat-item { display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1rem; background: var(--sand); border-radius: 0.75rem; }
+    .compat-item i { font-size: 1.1rem; color: var(--warm); width: 20px; text-align: center; }
+    .compat-item span { font-size: 0.9rem; font-weight: 600; color: var(--text); }
+
+    /* ── ECONOMY ─────────────────────────────────── */
+    #economia { background: var(--text); }
+    #economia .section-title { color: #fff; }
+    #economia .section-sub { color: rgba(255,255,255,0.6); }
+    #economia .section-label { color: var(--warm); }
+
+    .economy-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 1.25rem; padding: 1.75rem; margin-top: 2rem; }
+    .economy-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .economy-row:last-child { border-bottom: none; }
+    .economy-label { font-size: 0.9rem; color: rgba(255,255,255,0.7); }
+    .economy-value { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 700; color: #fff; }
+    .economy-value.crossed { text-decoration: line-through; color: rgba(255,255,255,0.35); font-size: 0.9rem; }
+    .economy-value.green { color: var(--green); font-size: 1.5rem; }
+    .economy-savings { text-align: center; margin-top: 1.5rem; padding: 1.25rem; background: var(--green); border-radius: 0.85rem; }
+    .economy-savings-text { font-size: 0.78rem; color: rgba(255,255,255,0.85); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; }
+    .economy-savings-value { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; color: #fff; margin-top: 0.25rem; }
+
+    /* ── CUIDADOS ────────────────────────────────── */
+    #cuidados { background: var(--sand); }
+    .cuidados-list { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 1.75rem; }
+    .cuidado-item { display: flex; align-items: flex-start; gap: 0.85rem; padding: 1rem 1.25rem; background: var(--white); border-radius: 0.85rem; border: 1px solid var(--border); }
+    .cuidado-num { width: 28px; height: 28px; border-radius: 50%; background: var(--sand-dark); color: var(--warm); font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .cuidado-text { font-size: 0.88rem; color: var(--text-mid); line-height: 1.55; }
+
+    /* ── SECOND CTA ──────────────────────────────── */
+    #cta2 { background: linear-gradient(135deg, var(--sand), var(--sand-dark)); text-align: center; }
+    #cta2 .inner { max-width: 540px; }
+
+    /* ── FOOTER ──────────────────────────────────── */
+    footer { background: var(--text); color: rgba(255,255,255,0.65); padding: 2.5rem 1.25rem; text-align: center; }
+    .footer-brand { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; color: #fff; margin-bottom: 0.3rem; }
+    .footer-tagline { font-size: 0.78rem; margin-bottom: 1.5rem; }
+    .footer-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .footer-link { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; }
+    .footer-link:hover { color: var(--green); }
+    .footer-link .fab.fa-whatsapp { color: #25d366; }
+    .footer-copy { font-size: 0.7rem; color: rgba(255,255,255,0.3); }
+
+    /* ── STICKY MOBILE CTA ───────────────────────── */
+    .sticky-cta {
+      display: none; position: fixed; bottom: 0; left: 0; right: 0;
+      background: #fff; border-top: 1px solid var(--border);
+      padding: 0.85rem 1.25rem; z-index: 100;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    }
+    @media (max-width: 700px) {
+      .sticky-cta { display: flex; align-items: center; gap: 1rem; }
+      body { padding-bottom: 72px; }
+    }
+    .sticky-cta-price { flex: 1; }
+    .sticky-cta-from { font-size: 0.7rem; color: var(--muted); text-decoration: line-through; }
+    .sticky-cta-value { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; color: var(--green-dark); line-height: 1; }
+    .sticky-cta .btn-cta { width: auto; padding: 0.8rem 1.25rem; font-size: 0.85rem; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+  <!-- URGENCY BAR -->
+  <div class="urgency-bar">
+    <span>⚡ Oferta exclusiva termina em</span>
+    <span class="countdown" id="countdown">10:00</span>
+    <span>— Estoque limitado</span>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-eyebrow reveal"><i class="fas fa-tag" style="font-size:0.65rem;"></i> 50% OFF — Por tempo limitado</div>
+        <h1 class="hero-title reveal d1">
+          Cozinhe com saúde e<br><em>praticidade</em>: o kit<br>cerâmico completo
+        </h1>
+        <p class="hero-sub reveal d2">Antiaderente, livre de PFOA, fácil de limpar e distribui o calor por igual. Economize tempo e óleo com 6 peças projetadas para durar.</p>
+
+        <div class="stars-row reveal d2">
+          <div class="stars">★★★★★</div>
+          <span class="stars-text"><strong>4.9</strong> · 87 avaliações reais</span>
+        </div>
+
+        <div class="price-block reveal d3">
+          <p class="price-from">De R$ 499,90</p>
+          <div class="price-main">
+            <span class="price-value">R$ 149,90</span>
+            <span class="price-badge">50% OFF</span>
+          </div>
+          <p class="price-pix"><strong>à vista no PIX</strong></p>
+          <p class="price-installment">ou 6x de R$ 24,98 sem juros no cartão</p>
+          <p class="price-savings">💰 Você economiza R$ 150,00 nesta compra</p>
+        </div>
+
+        <button class="btn-cta reveal d4" onclick="handleCTA()">
+          <i class="fas fa-shopping-bag"></i> COMPRAR AGORA
+        </button>
+        <div class="trust-mini reveal d4">
+          <div class="trust-mini-item"><img src="pix.png" style="width:16px;height:16px;object-fit:contain;vertical-align:middle;"> Pagamento via PIX</div>
+          <div class="trust-mini-item"><i class="fas fa-truck"></i> Entrega para todo Brasil</div>
+          <div class="trust-mini-item"><i class="fas fa-shield-alt"></i> Compra segura</div>
+        </div>
+      </div>
+
+      <div class="hero-img-wrap reveal d2">
+        <img src="panela1.jpg" alt="Jogo de Panelas Cerâmico — lifestyle" />
+      </div>
+    </div>
+  </section>
+
+  <!-- PROOF STRIP -->
+  <div class="proof-strip reveal">
+    <div class="proof-strip-inner">
+      <div class="proof-stat"><div class="proof-stat-value">4.9★</div><div class="proof-stat-label">Avaliação média</div></div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat"><div class="proof-stat-value">87</div><div class="proof-stat-label">Avaliações reais</div></div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat"><div class="proof-stat-value">6</div><div class="proof-stat-label">Peças no kit</div></div>
+      <div class="proof-divider"></div>
+      <div class="proof-stat"><div class="proof-stat-value">4x</div><div class="proof-stat-label">Tipos de fogão</div></div>
+    </div>
+  </div>
+
+  <!-- DEPOIMENTOS -->
+  <section class="section">
+    <div class="inner">
+      <p class="section-label reveal">O que os clientes dizem</p>
+      <h2 class="section-title reveal d1">Quem já comprou, <em>aprova.</em></h2>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal d2">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Panelas lindas e não grudam nada. Limpeza muito fácil, só passar uma esponja. Super recomendo! Chegou antes do prazo e embalagem impecável."</p>
+          <div class="testimonial-author">Carla M. <span>São Paulo, SP · Compra verificada</span></div>
+        </div>
+        <div class="testimonial-card reveal d3">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Cozinha muito rápido e a limpeza é muito fácil. Valeu cada centavo. Uso todo dia e não arranharam nada. As tampas de vidro são ótimas."</p>
+          <div class="testimonial-author">João P. <span>Rio de Janeiro, RJ · Compra verificada</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- KIT / 6 PEÇAS -->
+  <section class="section" id="kit">
+    <div class="inner wide">
+      <p class="section-label reveal">Composição do kit</p>
+      <h2 class="section-title reveal d1">6 peças que vão <em>transformar</em> sua cozinha.</h2>
+      <p class="section-sub reveal d2">Cada peça foi pensada para cobrir uma necessidade diferente, do dia a dia às grandes refeições.</p>
+
+      <img src="panela2.jpg" alt="Composição — 6 peças" class="kit-img reveal d2" />
+
+      <div class="pieces-grid">
+        <div class="piece-card reveal d1">
+          <div class="piece-icon"><i class="fas fa-utensils"></i></div>
+          <div>
+            <div class="piece-name">Caçarola 24cm</div>
+            <div class="piece-detail">Ideal para ensopados e massas</div>
+            <div class="piece-capacity">4L · com tampa</div>
+          </div>
+        </div>
+        <div class="piece-card reveal d2">
+          <div class="piece-icon"><i class="fas fa-egg"></i></div>
+          <div>
+            <div class="piece-name">Frigideira 20cm</div>
+            <div class="piece-detail">Perfeita para ovos e omeletes</div>
+            <div class="piece-capacity">1L</div>
+          </div>
+        </div>
+        <div class="piece-card reveal d3">
+          <div class="piece-icon"><i class="fas fa-bowl-food"></i></div>
+          <div>
+            <div class="piece-name">Panela 20cm</div>
+            <div class="piece-detail">Arroz, feijão e uso diário</div>
+            <div class="piece-capacity">2,1L · com tampa</div>
+          </div>
+        </div>
+        <div class="piece-card reveal d1">
+          <div class="piece-icon"><i class="fas fa-fire-burner"></i></div>
+          <div>
+            <div class="piece-name">Caçarola 22cm</div>
+            <div class="piece-detail">Preparações maiores e sopas</div>
+            <div class="piece-capacity">2,7L · com tampa</div>
+          </div>
+        </div>
+        <div class="piece-card reveal d2">
+          <div class="piece-icon"><i class="fas fa-star"></i></div>
+          <div>
+            <div class="piece-name">Frigideira Alta 24cm</div>
+            <div class="piece-detail">Versátil para frituras e refogados</div>
+            <div class="piece-capacity">2,3L</div>
+          </div>
+        </div>
+        <div class="piece-card reveal d3">
+          <div class="piece-icon"><i class="fas fa-circle-dot"></i></div>
+          <div>
+            <div class="piece-name">Panela 18cm</div>
+            <div class="piece-detail">Prática para porções individuais</div>
+            <div class="piece-capacity">1,5L · com tampa</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="kit-footer reveal">
+        <i class="fas fa-check-circle"></i>
+        Todas com tampa de vidro temperado e saída de vapor
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFÍCIOS -->
+  <section class="section">
+    <div class="inner wide">
+      <p class="section-label reveal">Tecnologia e qualidade</p>
+      <h2 class="section-title reveal d1">Por que nossas panelas<br>são <em>especiais</em></h2>
+
+      <img src="panela3.jpg" alt="Características do produto" class="features-img reveal d2" />
+
+      <div class="benefits-grid">
+        <div class="benefit-card reveal d1">
+          <div class="benefit-icon"><i class="fas fa-fire"></i></div>
+          <div class="benefit-name">Calor uniforme</div>
+          <div class="benefit-desc">Alumínio que cozinha por igual, mais rápido e sem pontos quentes</div>
+        </div>
+        <div class="benefit-card reveal d2">
+          <div class="benefit-icon"><i class="fas fa-seedling"></i></div>
+          <div class="benefit-name">Antiaderente Cerâmico</div>
+          <div class="benefit-desc">Nada gruda. Menos óleo, mais saúde. Livre de PFOA</div>
+        </div>
+        <div class="benefit-card reveal d3">
+          <div class="benefit-icon"><i class="fas fa-hands-washing"></i></div>
+          <div class="benefit-name">Fácil limpeza</div>
+          <div class="benefit-desc">Limpa em segundos com esponja macia. Para uma vida mais prática</div>
+        </div>
+        <div class="benefit-card reveal d4">
+          <div class="benefit-icon"><i class="fas fa-eye"></i></div>
+          <div class="benefit-name">Tampa de vidro</div>
+          <div class="benefit-desc">Vidro temperado com saída de vapor. Veja o cozimento sem abrir</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPATIBILIDADE COM FOGÕES -->
+  <section class="section" style="background: var(--sand);">
+    <div class="inner wide">
+      <p class="section-label reveal">Versatilidade total</p>
+      <h2 class="section-title reveal d1">Compatível com <em>todos os fogões</em></h2>
+      <div class="compat-grid">
+        <img src="panela4.jpg" alt="Compatibilidade com fogões" class="compat-img reveal d1" />
+        <div class="compat-list reveal d2">
+          <div class="compat-item"><i class="fas fa-fire"></i><span>Fogão a Gás</span></div>
+          <div class="compat-item"><i class="fas fa-circle"></i><span>Vitrocerâmico</span></div>
+          <div class="compat-item"><i class="fas fa-plug"></i><span>Elétrico</span></div>
+          <div class="compat-item"><i class="fas fa-magnet"></i><span>Indução</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ECONOMY -->
+  <section class="section" id="economia">
+    <div class="inner">
+      <p class="section-label reveal">Comparativo de preço</p>
+      <h2 class="section-title reveal d1" style="color:#fff;">Vale muito a pena<br><em style="color:var(--warm);">comprar o kit.</em></h2>
+      <div class="economy-card reveal d2">
+        <div class="economy-row">
+          <span class="economy-label">Comprando separado</span>
+          <span class="economy-value crossed">R$ 299,90</span>
+        </div>
+        <div class="economy-row">
+          <span class="economy-label" style="color:#fff; font-weight:700;">Kit Cerâmico 6 Peças</span>
+          <span class="economy-value green">R$ 149,90</span>
+        </div>
+      </div>
+      <div class="economy-savings reveal d3">
+        <div class="economy-savings-text">💰 você economiza</div>
+        <div class="economy-savings-value">R$ 150,00</div>
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.8); margin-top:0.25rem; font-weight:600;">50% de desconto</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUIDADOS -->
+  <section class="section" id="cuidados">
+    <div class="inner">
+      <p class="section-label reveal">Guia de uso</p>
+      <h2 class="section-title reveal d1">Cuidados simples<br>para <em>durar mais</em></h2>
+      <div class="cuidados-list">
+        <div class="cuidado-item reveal d1">
+          <div class="cuidado-num">1</div>
+          <div class="cuidado-text">Use <strong>utensílios de silicone ou madeira</strong> para preservar o revestimento antiaderente e garantir maior durabilidade.</div>
+        </div>
+        <div class="cuidado-item reveal d2">
+          <div class="cuidado-num">2</div>
+          <div class="cuidado-text">Lave com <strong>esponja macia e detergente neutro</strong>. Evite esponjas abrasivas ou palha de aço que danificam a cerâmica.</div>
+        </div>
+        <div class="cuidado-item reveal d3">
+          <div class="cuidado-num">3</div>
+          <div class="cuidado-text">Evite <strong>choques térmicos</strong> — não leve a panela quente diretamente para água fria. Aguarde esfriar naturalmente.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECOND CTA -->
+  <section class="section" id="cta2">
+    <div class="inner">
+      <p class="section-label reveal">Aproveite enquanto durar</p>
+      <h2 class="section-title reveal d1">Pronto para transformar<br>sua <em>cozinha</em>?</h2>
+      <p class="section-sub reveal d2">Mais de 87 famílias já trocaram as panelas velhas por esse kit. Frete grátis para todo o Brasil.</p>
+
+      <div style="margin-top:1.5rem;" class="reveal d2">
+        <del style="color:var(--muted); font-size:0.88rem;">R$ 299,90</del>
+        <div style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:700; color:var(--green-dark); line-height:1; margin:0.2rem 0;">R$ 149,90</div>
+        <div style="font-size:0.78rem; color:var(--muted); margin-bottom:1.25rem;">ou 6x de R$ 24,98 sem juros · à vista no PIX</div>
+      </div>
+
+      <button class="btn-cta reveal d3" onclick="handleCTA()" style="max-width:440px; margin: 0 auto;">
+        <i class="fas fa-shopping-bag"></i> COMPRAR AGORA — R$ 149,90
+      </button>
+
+      <div style="margin-top:0.85rem; text-align:center; font-size:0.78rem; color:var(--muted);" class="reveal d3">
+        ✅ Compra segura &nbsp;·&nbsp; Pagamento via PIX &nbsp;·&nbsp; Entrega garantida
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">Principia Home</div>
+    <p class="footer-tagline">Produtos de qualidade para o seu lar</p>
+    <div class="footer-links">
+      <a class="footer-link" href="https://wa.me/5562982202739" target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i>(62) 98220-2739
+      </a>
+      <a class="footer-link" href="mailto:atendimento@principiahome.com">
+        <i class="fas fa-envelope"></i>atendimento@principiahome.com
+      </a>
+    </div>
+    <p class="footer-copy">Principia Home · Todos os direitos reservados © 2025</p>
+  </footer>
+
+  <!-- Sticky CTA Mobile -->
+  <div class="sticky-cta" id="stickyCta">
+    <div class="sticky-cta-price">
+      <div class="sticky-cta-from">De R$ 499,90</div>
+      <div class="sticky-cta-value">R$ 149,90</div>
+    </div>
+    <button class="btn-cta" onclick="handleCTA()">COMPRAR AGORA</button>
+  </div>
+
+  <script>
+    // ── Countdown ─────────────────────────────────
+    function startCountdown(minutes) {
+      var total = minutes * 60;
+      var el = document.getElementById('countdown');
+      var interval = setInterval(function() {
+        if (total <= 0) {
+          total = minutes * 60; // restart
+        }
+        var m = Math.floor(total / 60);
+        var s = total % 60;
+        el.textContent = (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+        total--;
+      }, 1000);
+    }
+    startCountdown(10);
+
+    // ── CTA Handler ───────────────────────────────
+    function handleCTA() {
+      fbq('track', 'AddToCart', {
+        value: 149.90,
+        currency: 'BRL',
+        content_name: 'Jogo de Panelas Cerâmico 6 Peças',
+        content_type: 'product'
+      });
+      window.location.href = 'checkout.html';
+    }
+
+    // ── Scroll Reveal ─────────────────────────────
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(e) {
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+      });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+    document.querySelectorAll('#hero .reveal').forEach(function(el) { el.classList.add('visible'); });
+
+    // ── Hide sticky near footer ───────────────────
+    var footer = document.querySelector('footer');
+    var sticky = document.getElementById('stickyCta');
+    new IntersectionObserver(function(entries) {
+      sticky.style.opacity = entries[0].isIntersecting ? '0' : '1';
+      sticky.style.pointerEvents = entries[0].isIntersecting ? 'none' : 'auto';
+    }, { threshold: 0.1 }).observe(footer);
+  </script>
+
+</body>
+</html>
